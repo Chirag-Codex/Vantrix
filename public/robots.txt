@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /book-demo
+Allow: /privacy
+Allow: /terms
+Disallow: /checkout
+Disallow: /success
+Disallow: /onboarding
+
+Sitemap: https://screen.vantrix.ai/sitemap.xml

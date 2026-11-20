@@ -1,0 +1,15 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="#080808"/>
+  <circle cx="960" cy="350" r="650" fill="url(#hero_amber_radial)" opacity="0.25"/>
+  <path d="M0 600L480 500L960 650L1440 450L1920 580V1080H0V600Z" fill="url(#grid_linear)" opacity="0.10"/>
+  <defs>
+    <radialGradient id="hero_amber_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(960 350) rotate(90) scale(650)">
+      <stop stop-color="#E8921A"/>
+      <stop offset="1" stop-color="#080808" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="grid_linear" x1="960" y1="450" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5A623"/>
+      <stop offset="1" stop-color="#080808" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+</svg>
