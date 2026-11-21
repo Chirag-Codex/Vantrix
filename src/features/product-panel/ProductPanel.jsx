@@ -6,12 +6,12 @@ export function ProductPanel() {
   return (
     <section id="product-panel" className="py-20 md:py-28">
       <Container>
-        <div className="mb-12 text-center">
+        <div className="mb-12 flex flex-col items-center text-center max-w-3xl mx-auto">
           <Eyebrow>ENTERPRISE INTERFACE</Eyebrow>
-          <h2 className="heading-h2 mt-3">
+          <h2 className="heading-h2 heading-h2--center mt-3 text-center w-full">
             Designed for Engineering Leaders & Recruiters
           </h2>
-          <p className="mt-3 text-[14px] text-[var(--muted)]">
+          <p className="mt-3 max-w-xl text-[14px] text-[var(--muted)]">
             Streamlined technical assessment pipeline with real-time sandbox execution
           </p>
         </div>

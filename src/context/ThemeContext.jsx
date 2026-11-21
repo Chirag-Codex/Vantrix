@@ -1,7 +1,8 @@
 import * as React from 'react';
 
+// Light-only design — ThemeContext kept for API compatibility.
 export const ThemeContext = React.createContext({
-  theme: 'dark',
+  theme: 'light',
   toggleTheme: () => {},
 });
 
@@ -14,15 +15,14 @@ export function ThemeProvider({ children }) {
     }
 
     const root = document.documentElement;
-    root.classList.remove('light');
-    root.classList.add('dark');
-    root.setAttribute('data-theme', 'dark');
-    root.style.colorScheme = 'dark';
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0A0907');
+    root.classList.remove('dark');
+    root.removeAttribute('data-theme');
+    root.style.colorScheme = 'light';
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#F6F7FC');
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme: 'dark', toggleTheme: () => {} }}>
+    <ThemeContext.Provider value={{ theme: 'light', toggleTheme: () => {} }}>
       {children}
     </ThemeContext.Provider>
   );

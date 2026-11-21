@@ -1,11 +1,15 @@
+/**
+ * theme-init.js — legacy file, now a no-op.
+ * The design is light-only. No dark class applied.
+ * Motion preference is handled by motion-init.js.
+ */
 (function () {
   try {
-    localStorage.removeItem('theme');
-    document.documentElement.classList.remove('light');
-    document.documentElement.classList.add('dark');
-    document.documentElement.setAttribute('data-theme', 'dark');
-    document.documentElement.style.colorScheme = 'dark';
+    // Remove any stale dark class / theme attributes
+    document.documentElement.classList.remove('dark');
+    document.documentElement.removeAttribute('data-theme');
+    document.documentElement.style.colorScheme = 'light';
   } catch (e) {
-    document.documentElement.classList.add('dark');
+    /* ignore */
   }
 })();

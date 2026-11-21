@@ -11,8 +11,8 @@ export function FaqSection() {
   return (
     <section id="faq" className="py-20 md:py-28">
       <Container className="max-w-3xl">
-        <div className="mb-12 text-center md:mb-16">
-          <h2 className="heading-h2">
+        <div className="mb-12 flex flex-col items-center text-center md:mb-16">
+          <h2 className="heading-h2 heading-h2--center text-center w-full">
             {faqConfig.heading}
           </h2>
           <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-[var(--muted)]">

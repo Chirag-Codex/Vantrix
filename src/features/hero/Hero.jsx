@@ -1,36 +1,47 @@
 import * as React from 'react';
-import { Play, Pause, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { Container } from '@/components/Container';
 import { SlideIndicators } from './SlideIndicators';
+import { Aurora } from '@/components/Aurora';
+import { AURORA } from '@/config/aurora';
+import { PastelMeshAura } from '@/components/PastelMeshAura';
 
 const SLIDES = [
   {
     eyebrow: 'Technical assessment platform',
     line1: 'Hire Better Engineers.',
-    line2: 'Faster.',
+    line2: null,
+    accent: 'Faster.',
     description:
       'Secure technical assessments with AI-assisted evaluation, coding challenges and integrity monitoring, in one enterprise-grade platform.',
+    lead: 'Provisional, tamper-aware scoring with clear candidate guidance.',
   },
   {
     eyebrow: 'Standardized evaluation',
     line1: 'Score every candidate',
-    line2: 'the same way.',
+    line2: 'the same',
+    accent: 'way.',
     description:
       'Deterministic rubrics and AI evaluation eliminate interviewer variance across all engineering levels and roles.',
+    lead: 'Eliminate bias with deterministic rubrics and AI evaluation.',
   },
   {
     eyebrow: 'Recruiter intelligence',
     line1: 'Give recruiters a shortlist,',
-    line2: 'not a spreadsheet.',
+    line2: 'not a',
+    accent: 'spreadsheet.',
     description:
       'Automatic P1, P2, and P3 tiering transforms raw code submissions into fast, confident hiring decisions.',
+    lead: 'Automatic P1/P2/P3 tiering, right in the recruiter dashboard.',
   },
   {
     eyebrow: 'Assessment integrity',
     line1: 'Prevent fraud before it',
-    line2: 'reaches engineering.',
+    line2: 'reaches',
+    accent: 'engineering.',
     description:
       'Automated session forensics, environment anomaly detection, and real-time plagiarism prevention ensure authentic candidate code.',
+    lead: 'Session forensics, anomaly detection and plagiarism prevention.',
   },
 ];
 
@@ -126,7 +137,6 @@ export function Hero({ onOpenDemoModal }) {
     }, 600);
   };
 
-  const togglePlayback = () => setIsPlaying((prev) => !prev);
   const activeSlide = SLIDES[currentSlide];
 
   return (
@@ -137,80 +147,84 @@ export function Hero({ onOpenDemoModal }) {
       className="relative h-[280vh] w-full"
     >
       {/* Sticky Hero Viewport */}
-      <div
-        className="sticky top-0 flex h-screen min-h-[720px] w-full flex-col items-center justify-center overflow-hidden bg-[var(--bg)] pt-16 text-center"
+      <Aurora
+        config={AURORA.hero}
+        className="sticky top-0 h-screen min-h-[720px] w-full flex-col overflow-hidden pt-[76px]"
+        style={{ display: 'flex', alignItems: 'stretch' }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onFocus={() => setIsHovered(true)}
         onBlur={() => setIsHovered(false)}
       >
-        {/* Background scene gradient from spec */}
-        <div
-          className="pointer-events-none absolute inset-0 -z-20"
-          style={{
-            background: 'var(--scene)',
-          }}
-          aria-hidden="true"
-        />
+        {/* Ambient Pastel Mesh Aura with Mouse-Reactive Drift */}
+        <PastelMeshAura />
 
-        {/* Top ambient gold glow */}
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-[480px] -z-15"
-          style={{
-            background:
-              'radial-gradient(ellipse 75% 55% at 50% 20%, var(--bg-glow-1) 0%, transparent 70%)',
-          }}
-          aria-hidden="true"
-        />
-
-        {/* Vertical overlay from spec */}
-        <div
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{
-            background:
-              'linear-gradient(180deg, var(--hero-ov-top) 0%, var(--hero-ov-mid) 45%, var(--bg) 100%)',
-          }}
-          aria-hidden="true"
-        />
-
-        {/* Main Centered Content Stack */}
-        <Container className="relative z-10 flex flex-col items-center justify-center px-4 pt-8 pb-16 text-center sm:px-6">
-          {/* Badge Pill: sparkle icon in --accent, "Technical assessment platform" */}
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--fill)] px-[18px] py-[10px] text-[14px] font-medium text-[var(--text)] backdrop-blur-sm">
-            <Sparkles className="h-4 w-4 text-[var(--accent)] shrink-0" />
-            <span>{activeSlide.eyebrow}</span>
-          </div>
-
-          {/* H1 Headline: 88px/1.05, 800, tracking -0.04em, --gold-text-grad fill (Mobile 44px) */}
-          <div
-            key={currentSlide}
-            className="flex min-h-[120px] items-center justify-center animate-fade-in transition-all duration-300 sm:min-h-[160px] lg:min-h-[190px]"
-          >
-            <h1 className="text-[44px] font-extrabold leading-[1.05] tracking-[-0.04em] text-gold-gradient sm:text-[68px] lg:text-[88px]">
-              <span>{activeSlide.line1}</span>
-              <br />
-              <span>{activeSlide.line2}</span>
-            </h1>
-          </div>
-
-          {/* Paragraph: 19px/1.6 --muted, max-width 620px */}
-          <p className="mt-[26px] max-w-[620px] text-[16px] leading-[1.65] text-[var(--muted)] sm:text-[19px]">
-            {activeSlide.description}
-          </p>
-
-          {/* CTAs */}
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-[14px]">
-            <button
-              type="button"
-              onClick={onOpenDemoModal}
-              className="btn-gold"
-              aria-label="Book a live product demo"
+        {/* Two-column hero content */}
+        <Container className="relative z-10 flex flex-1 items-center pt-[84px] pb-[64px] gap-16">
+          {/* Left column — headline + CTAs */}
+          <div className="flex-[1.15] min-w-0">
+            {/* Eyebrow badge */}
+            <div
+              key={`eyebrow-${currentSlide}`}
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[rgb(var(--c-card)/0.7)] px-4 py-2 text-[13px] font-medium text-[rgb(var(--c-text))] animate-fade-in"
             >
-              BOOK A DEMO
-            </button>
-            <a href="#pricing" className="btn-ghost">
-              BUY NOW
-            </a>
+              <Sparkles className="h-3.5 w-3.5 text-[rgb(var(--c-indigo))] shrink-0" />
+              <span>{activeSlide.eyebrow}</span>
+            </div>
+
+            {/* H1 */}
+            <div
+              key={`h1-${currentSlide}`}
+              className="animate-fade-in"
+            >
+              <h1 className="heading-h1 font-serif">
+                <span className="block">{activeSlide.line1}</span>
+                {activeSlide.line2 !== null && (
+                  <span className="block">
+                    {activeSlide.line2}{' '}
+                    <em className="accent-word" style={{ fontStyle: 'italic' }}>
+                      {activeSlide.accent}
+                    </em>
+                  </span>
+                )}
+                {activeSlide.line2 === null && (
+                  <span className="block">
+                    <em className="accent-word" style={{ fontStyle: 'italic' }}>
+                      {activeSlide.accent}
+                    </em>
+                  </span>
+                )}
+              </h1>
+            </div>
+
+            {/* CTAs */}
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={onOpenDemoModal}
+                className="btn-gold"
+                aria-label="Book a live product demo"
+              >
+                Book a demo →
+              </button>
+              <a href="/#pricing" className="btn-ghost">
+                Buy now
+              </a>
+            </div>
+          </div>
+
+          {/* Right column — lead + supporting text */}
+          <div
+            key={`right-${currentSlide}`}
+            className="flex-1 min-w-0 hidden md:flex flex-col justify-center animate-fade-in"
+            style={{ marginTop: '14px' }}
+          >
+            <p className="text-[21px] leading-[1.5] text-[rgb(var(--c-text))] font-medium mb-4">
+              {activeSlide.lead || activeSlide.description.split(',')[0] + '.'}
+            </p>
+            <p className="text-[18px] leading-[1.6] text-[rgb(var(--c-muted))]">
+              {activeSlide.description}
+            </p>
           </div>
         </Container>
 
@@ -222,23 +236,7 @@ export function Hero({ onOpenDemoModal }) {
             onChangeSlide={goToSlide}
           />
         </div>
-
-        {/* Bottom Right: 52px circular pause button (border --line-strong, bg --panel) */}
-        <div className="absolute bottom-8 right-6 z-20 md:right-10">
-          <button
-            type="button"
-            onClick={togglePlayback}
-            aria-label={
-              isPlaying
-                ? 'Pause background video and slide transition'
-                : 'Play background video and slide transition'
-            }
-            className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-[var(--line-strong)] bg-[var(--panel)] text-[var(--text)] backdrop-blur-md transition-colors hover:border-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
-          >
-            {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="ml-0.5 h-4 w-4" />}
-          </button>
-        </div>
-      </div>
+      </Aurora>
     </section>
   );
 }

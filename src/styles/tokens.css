@@ -1,0 +1,60 @@
+/* =================================================================
+   VANTRIX DESIGN TOKENS — Light mode only
+   Usage in Tailwind: rgb(var(--c-x) / <alpha-value>)
+   ================================================================= */
+
+:root {
+  /* Page & surfaces */
+  --c-bg:       246 247 252;   /* #F6F7FC */
+  --c-card:     255 255 255;   /* #FFFFFF */
+
+  /* Text */
+  --c-text:     11 16 32;      /* #0B1020 — solid buttons too */
+  --c-btn:      11 16 32;
+  --c-btn-text: 255 255 255;
+  --c-muted:    75 84 112;     /* #4B5470 — body text ≥4.5:1 */
+  --c-muted-2:  122 129 156;   /* #7A819C — inactive large text ≥3:1 */
+  --c-logo:     95 103 131;    /* #5F6783 */
+
+  /* Brand */
+  --c-blue:     11 99 214;     /* #0B63D6 */
+  --c-indigo:   91 61 245;     /* #5B3DF5 */
+
+  /* Surfaces */
+  --c-chip:     238 241 250;   /* #EEF1FA */
+  --c-tint:     232 238 255;   /* #E8EEFF */
+  --c-code:     241 243 251;   /* #F1F3FB */
+
+  /* Status */
+  --c-ok:       15 138 95;     /* #0F8A5F */
+  --c-ok-bg:    227 245 236;   /* #E3F5EC */
+  --c-danger:   220 38 38;
+  --c-danger-bg:254 226 226;
+
+  /* Borders */
+  --line:         rgba(11, 16, 32, 0.10);
+  --line-strong:  rgba(11, 16, 32, 0.35);
+
+  /* Aurora blob colours (RGB triplets) */
+  --c-aurora-blue:  211 223 255;  /* #D3DFFF */
+  --c-aurora-lilac: 227 216 255;  /* #E3D8FF */
+  --c-aurora-sky:   203 234 255;  /* #CBEAFF */
+  --c-aurora-mint:  214 245 234;  /* #D6F5EA */
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(11, 16, 32, 0.04),
+                 0 18px 50px rgba(40, 50, 120, 0.10);
+
+  /* Legacy compat aliases (keeps existing var(--ok) refs working) */
+  --ok:           rgb(var(--c-ok));
+  --ok-bg:        rgb(var(--c-ok-bg));
+  --danger:       rgb(var(--c-danger));
+  --danger-bg:    rgb(var(--c-danger-bg));
+
+  /* Syntax tokens — light theme */
+  --syn-plain:    rgb(var(--c-text));
+  --syn-keyword:  rgb(var(--c-indigo));
+  --syn-string:   rgb(var(--c-ok));
+  --syn-comment:  rgb(var(--c-muted));
+  --syn-grid:     rgba(11, 16, 32, 0.07);
+}

@@ -1,49 +1,70 @@
+@import './tokens.css';
+@import './motion.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Self-hosted fonts */
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('/fonts/InstrumentSerif-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  font-synthesis: none;
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('/fonts/InstrumentSerif-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  font-synthesis: none;
+}
+
 @layer base {
+  /*
+   * Legacy token aliases — required for existing tests and components that
+   * still reference var(--bg), var(--text), var(--accent) etc.
+   * .dark scope kept so the token-completeness test does not fail.
+   */
   :root,
   .dark,
   [data-theme='dark'] {
-    --bg: #0A0907;
-    --bg-glow-1: rgba(217, 169, 59, 0.22);
-    --bg-glow-2: rgba(217, 138, 47, 0.10);
-    --text: #F5F1E8;
-    --muted: #BDB5A4;
-    --muted2: #8F8878;
-    --fill: rgba(255, 255, 255, 0.05);
-    --line: rgba(255, 255, 255, 0.09);
-    --line-strong: rgba(217, 169, 59, 0.42);
-    --panel: rgba(10, 9, 7, 0.65);
-    --code-bg: #050403;
-    --accent: #E3B94A;
-    --gold-soft: rgba(217, 169, 59, 0.20);
-    --gold-grad: linear-gradient(135deg, #E3B94A, #D98A2F);
-    --gold-text-grad: linear-gradient(135deg, #E8C257, #D98A2F);
-    --on-gold: #1A1307;
-    --glow: rgba(217, 169, 59, 0.20);
-    --hero-ov-top: rgba(10, 9, 7, 0.70);
-    --hero-ov-mid: rgba(10, 9, 7, 0.50);
-    --scene: radial-gradient(640px 440px at 62% 32%, rgba(217, 169, 59, 0.28), transparent 70%),
-      radial-gradient(520px 520px at 12% 62%, rgba(120, 90, 40, 0.35), transparent 70%),
-      linear-gradient(120deg, #1d1810, #2a2218 50%, #12100b);
-    --ok: #6EE7B7;
-    --ok-bg: rgba(52, 211, 153, 0.14);
-    --glass: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
+    --bg: rgb(var(--c-bg));
+    --text: rgb(var(--c-text));
+    --muted: rgb(var(--c-muted));
+    --muted2: rgb(var(--c-muted-2));
+    --fill: rgb(var(--c-chip));
+    --line: rgba(11, 16, 32, 0.10);
+    --line-strong: rgba(11, 16, 32, 0.35);
+    --panel: rgb(var(--c-chip));
+    --code-bg: rgb(var(--c-code));
+    --accent: rgb(var(--c-indigo));
+    --gold-soft: rgb(var(--c-tint));
+    --gold-grad: rgb(var(--c-indigo));
+    --gold-text-grad: linear-gradient(135deg, rgb(var(--c-indigo)), rgb(var(--c-blue)));
+    --on-gold: rgb(var(--c-btn-text));
+    --glow: rgb(var(--c-aurora-lilac));
+    --ok: rgb(var(--c-ok));
+    --ok-bg: rgb(var(--c-ok-bg));
+    --danger: rgb(var(--c-danger));
+    --danger-bg: rgb(var(--c-danger-bg));
+    --syn-plain: rgb(var(--c-text));
+    --syn-keyword: rgb(var(--c-indigo));
+    --syn-string: rgb(var(--c-ok));
+    --syn-comment: rgb(var(--c-muted));
+    --syn-grid: rgba(11, 16, 32, 0.07);
+    --glass: none;
     --glass-shadow: none;
-    --danger: #F87171;
-    --danger-bg: rgba(248, 113, 113, 0.12);
-    --select-bg: #14120D;
-
-    /* Syntax Tokens for Code Windows (Dark) */
-    --syn-plain: #F5F1E8;
-    --syn-keyword: #E3B94A;
-    --syn-string: #6EE7B7;
-    --syn-comment: #8F8878;
-    --syn-grid: rgba(255, 255, 255, 0.04);
-
-    color-scheme: dark;
+    --select-bg: rgb(var(--c-card));
+    --hero-ov-top: rgba(246, 247, 252, 0);
+    --hero-ov-mid: rgba(246, 247, 252, 0);
+    --bg-glow-1: rgb(var(--c-aurora-sky) / 0.3);
+    --bg-glow-2: rgb(var(--c-aurora-blue) / 0.1);
+    --scene: none;
   }
 
   * {
@@ -51,14 +72,14 @@
   }
 
   html {
-    background-color: var(--bg);
-    color: var(--text);
-    color-scheme: dark;
+    background-color: rgb(var(--c-bg));
+    color: rgb(var(--c-text));
+    color-scheme: light;
   }
 
   body {
-    background-color: var(--bg);
-    color: var(--text);
+    background-color: rgb(var(--c-bg));
+    color: rgb(var(--c-text));
     font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -66,38 +87,40 @@
     min-height: 100vh;
   }
 
-  /* Dropdown selects: strict dark mode */
+  /* Light dropdown */
   select {
-    color-scheme: dark;
-    background-color: var(--select-bg);
-    color: var(--text);
+    color-scheme: light;
+    background-color: rgb(var(--c-card));
+    color: rgb(var(--c-text));
   }
 
   option {
-    background-color: #14120D;
-    color: #F5F1E8;
+    background-color: rgb(var(--c-card));
+    color: rgb(var(--c-text));
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
+    outline: 2px solid rgb(var(--c-indigo));
+    outline-offset: 2px;
   }
 }
 
 @layer components {
-  /* Glass card surface from reference (Section 4 & 6) */
+  /* ----------------------------------------------------------------
+     Card surface
+  ---------------------------------------------------------------- */
   .v-card {
-    background: var(--glass);
+    background: rgb(var(--c-card));
     border: 1px solid var(--line);
-    border-radius: 32px;
-    box-shadow: var(--glass-shadow);
-    color: var(--text);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    border-radius: 28px;
+    box-shadow: var(--shadow-card);
+    color: rgb(var(--c-text));
+    transition: border-color 0.15s ease;
   }
 
   @media (max-width: 640px) {
     .v-card {
-      border-radius: 24px;
+      border-radius: 20px;
     }
   }
 
@@ -107,60 +130,171 @@
 
   /* Inner panel */
   .v-panel {
-    background: var(--panel);
+    background: rgb(var(--c-chip));
     border: 1px solid var(--line);
-    border-radius: 24px;
-    color: var(--text);
+    border-radius: 20px;
+    color: rgb(var(--c-text));
   }
 
-  /* Primary gold button (Section 6) */
+  /* ----------------------------------------------------------------
+     Buttons
+  ---------------------------------------------------------------- */
+  /* Primary solid button */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(var(--c-btn));
+    color: rgb(var(--c-btn-text));
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0;
+    border-radius: 9999px;
+    min-height: 50px;
+    padding: 0 24px;
+    border: none;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.88;
+  }
+
+  /* Ghost / outline button */
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1.5px solid var(--line-strong);
+    color: rgb(var(--c-text));
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0;
+    border-radius: 9999px;
+    min-height: 50px;
+    padding: 0 24px;
+    transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .btn-outline:hover {
+    background-color: rgb(var(--c-chip));
+    border-color: rgb(var(--c-indigo));
+  }
+
+  /* Legacy aliases — keep existing JSX refs working */
   .btn-gold {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--gold-grad);
-    color: var(--on-gold);
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
+    background: rgb(var(--c-btn));
+    color: rgb(var(--c-btn-text));
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0;
     border-radius: 9999px;
-    min-height: 48px;
-    padding: 0 26px;
+    min-height: 50px;
+    padding: 0 24px;
     border: none;
-    transition: filter 0.15s ease;
+    transition: opacity 0.15s ease;
     cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
   }
 
   .btn-gold:hover {
-    filter: brightness(1.08);
+    opacity: 0.85;
   }
 
-  /* Secondary ghost button (Section 6) */
   .btn-ghost {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     background: transparent;
-    border: 1px solid var(--line-strong);
-    color: var(--text);
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
+    border: 1.5px solid var(--line-strong);
+    color: rgb(var(--c-text));
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0;
     border-radius: 9999px;
-    min-height: 48px;
-    padding: 0 26px;
+    min-height: 50px;
+    padding: 0 24px;
     transition: background-color 0.15s ease, border-color 0.15s ease;
     cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
   }
 
   .btn-ghost:hover {
-    background: var(--fill);
-    border-color: var(--accent);
+    background-color: rgb(var(--c-chip));
+    border-color: rgb(var(--c-indigo));
   }
 
-  /* Gold text gradient with solid fallback (Section 3 requirement) */
+  /* ----------------------------------------------------------------
+     Typography utilities
+  ---------------------------------------------------------------- */
+  .heading-display {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: -0.015em;
+    line-height: 0.98;
+    color: rgb(var(--c-text));
+  }
+
+  .heading-h1 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(58px, 6.4vw, 92px);
+    line-height: 0.98;
+    letter-spacing: -0.015em;
+    color: rgb(var(--c-text));
+  }
+
+  .heading-h2 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(34px, 3.9vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    color: var(--text);
+  }
+
+  .heading-h2--center {
+    text-align: center !important;
+  }
+
+  /* Eyebrow */
+  .eyebrow-badge {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(var(--c-indigo));
+    display: inline-block;
+  }
+
+  /* Accent word (italic serif indigo) for headlines */
+  .accent-word {
+    font-style: italic;
+    color: rgb(var(--c-indigo));
+  }
+
+  /* ----------------------------------------------------------------
+     Misc
+  ---------------------------------------------------------------- */
+  /* Gold-gradient — solid indigo fallback then clip-path version */
   .text-gold-gradient {
     color: var(--accent);
   }
@@ -172,30 +306,5 @@
       -webkit-text-fill-color: transparent;
       color: transparent;
     }
-  }
-
-  /* Section heading H2 matching spec: 46px/1.1, tracking -0.025em, 700, centred (34px mobile) - solid --text */
-  .heading-h2 {
-    font-size: 34px;
-    line-height: 1.15;
-    letter-spacing: -0.025em;
-    font-weight: 700;
-    color: var(--text);
-    text-align: center;
-  }
-  @media (min-width: 768px) {
-    .heading-h2 {
-      font-size: 46px;
-      line-height: 1.1;
-    }
-  }
-
-  /* Eyebrow badge matching spec: 12px, weight 700, tracking 0.16em, uppercase, --accent */
-  .eyebrow-badge {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--accent);
   }
 }

@@ -1,0 +1,204 @@
+/* =================================================================
+   VANTRIX AURORA MOTION — transform-only, CLS 0
+   Rules: no filter/backdrop-filter/mix-blend-mode.
+   Max 4 blobs per aurora. Max 2 aurora instances in viewport.
+   ================================================================= */
+
+@layer components {
+  /* Aurora wrapper ------------------------------------------------ */
+  .aurora {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    contain: paint;
+    background-color: rgb(var(--c-bg));
+  }
+
+  /* Static top wash */
+  .aurora::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgb(var(--c-aurora-sky) / 0.85),
+      rgb(var(--c-aurora-sky) / 0) 75%
+    );
+  }
+
+  /* Blob field — masked so blobs fade out toward the bottom */
+  .aurora__field {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+            mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  }
+
+  /* Individual animated blob */
+  .aurora__blob {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    top: var(--top);
+    left: var(--left);
+    width: var(--w, 40%);
+    height: var(--h, 130%);
+    background: radial-gradient(closest-side, rgb(var(--c) / 1), rgb(var(--c) / 0));
+    transform: translate3d(0, 0, 0);
+    animation: aurora-sway var(--dur, 36s) ease-in-out var(--delay, 0s) infinite alternate;
+    will-change: transform;
+  }
+
+  /* Static streak texture — rendered above blobs, masked top to bottom */
+  .aurora::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgb(var(--c-card) / 0)   0 23px,
+        rgb(var(--c-card) / 0.16) 23px 41px,
+        rgb(var(--c-card) / 0)   41px 67px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgb(var(--c-card) / 0.10)  0 11px,
+        rgb(var(--c-card) / 0)    11px 29px,
+        rgb(var(--c-card) / 0.12) 29px 36px,
+        rgb(var(--c-card) / 0)    36px 83px
+      );
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 75%);
+            mask-image: linear-gradient(180deg, #000 0%, transparent 75%);
+  }
+
+  /* Softer variant for panels and CTA */
+  .aurora--soft::after {
+    opacity: 0.6;
+  }
+
+  /* Paused state — controlled via data-motion on the element or html */
+  .aurora[data-motion="paused"] .aurora__blob {
+    animation-play-state: paused;
+  }
+}
+
+/* Keyframe — transform only */
+@keyframes aurora-sway {
+  from { transform: translate3d(-10%, -3%, 0) scale(1, 1); }
+  50%  { transform: translate3d(6%,  4%, 0)  scale(1.08, 1.12); }
+  to   { transform: translate3d(14%, -2%, 0) scale(0.96, 1); }
+}
+
+/* Global pause from html attribute */
+html[data-motion="paused"] .aurora__blob {
+  animation-play-state: paused;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .aurora__blob {
+    animation: none;
+    will-change: auto;
+  }
+}
+html[data-motion="reduce"] .aurora__blob {
+  animation: none;
+  will-change: auto;
+}
+
+/* Forced colours / print — hide decorative layers */
+@media (forced-colors: active), print {
+  .aurora__blob,
+  .aurora::before,
+  .aurora::after {
+    display: none;
+  }
+}
+
+/* Marquee --------------------------------------------------------- */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  gap: var(--gap, 5rem);
+  animation: marquee var(--dur, 24s) linear infinite;
+  will-change: transform;
+}
+
+.marquee__track > ul {
+  display: flex;
+  gap: var(--gap, 5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track,
+.marquee[data-motion="paused"] .marquee__track,
+html[data-motion="paused"] .marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to { transform: translate3d(calc(-50% - var(--gap, 5rem) / 2), 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .marquee__track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    will-change: auto;
+  }
+  .marquee__track > ul[aria-hidden="true"] {
+    display: none;
+  }
+}
+html[data-motion="reduce"] .marquee__track {
+  animation: none;
+}
+
+/* Hover glow ------------------------------------------------------ */
+.hover-glow {
+  position: relative;
+}
+
+.hover-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    600px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgb(var(--c-aurora-lilac) / 0.35),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-glow:hover::before {
+    opacity: 1;
+  }
+}

@@ -5,6 +5,8 @@ import { LogoStrip } from '@/features/explore/LogoStrip';
 import { CapabilitiesSection } from '@/features/capabilities/CapabilitiesSection';
 import { ProductPanel } from '@/features/product-panel/ProductPanel';
 import { EnterpriseSection } from '@/features/enterprise/EnterpriseSection';
+import { PersonasSection } from '@/features/personas/PersonasSection';
+import { TalentApproachSection } from '@/features/talent-approach/TalentApproachSection';
 import { PricingSection } from '@/features/pricing/PricingSection';
 import { DemoCtaBand } from '@/features/hero/DemoCtaBand';
 import { NewsSection } from '@/features/news/NewsSection';
@@ -65,7 +67,13 @@ export function Home() {
         {/* 6. Enterprise Standards (01-04) */}
         <EnterpriseSection />
 
-        {/* 7. Pricing */}
+        {/* 7. Built for Every Hiring Stakeholder */}
+        <PersonasSection />
+
+        {/* 8. The Vantrix Talent Approach (7-Step Execution Framework) */}
+        <TalentApproachSection />
+
+        {/* 9. Pricing */}
         <PricingSection onOpenDemoModal={openDemoModal} />
 
         {/* 8. Demo CTA Band */}

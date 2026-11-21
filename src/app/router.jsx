@@ -20,6 +20,9 @@ const PrivacyPage = React.lazy(() =>
 const TermsPage = React.lazy(() =>
   import('./routes/TermsPage').then((m) => ({ default: m.TermsPage }))
 );
+const SecurityPage = React.lazy(() =>
+  import('./routes/SecurityPage').then((m) => ({ default: m.SecurityPage }))
+);
 const NotFoundPage = React.lazy(() =>
   import('./routes/NotFoundPage').then((m) => ({ default: m.NotFoundPage }))
 );
@@ -91,6 +94,14 @@ export const router = createBrowserRouter([
         element: (
           <RouteSuspense>
             <TermsPage />
+          </RouteSuspense>
+        ),
+      },
+      {
+        path: 'security',
+        element: (
+          <RouteSuspense>
+            <SecurityPage />
           </RouteSuspense>
         ),
       },

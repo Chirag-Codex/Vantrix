@@ -48,7 +48,10 @@ export function MockRazorpayModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md overflow-hidden rounded-[24px] border border-border bg-card p-0 shadow-2xl">
+      <DialogContent
+        hideCloseButton
+        className="max-w-md overflow-hidden rounded-[24px] border border-border bg-card p-0 md:p-0 gap-0 shadow-2xl"
+      >
         <DialogHeader className="sr-only">
           <DialogTitle>Razorpay Payment Gateway Simulation</DialogTitle>
           <DialogDescription>
@@ -71,7 +74,7 @@ export function MockRazorpayModal({
             <button
               type="button"
               onClick={() => onOpenChange(false)}
-              className="text-white/60 hover:text-white cursor-pointer"
+              className="text-white/60 hover:text-white cursor-pointer p-1 rounded-md transition-opacity"
               aria-label="Close payment modal"
             >
               <X className="h-4 w-4" />
@@ -172,12 +175,12 @@ export function MockRazorpayModal({
           </div>
 
           {/* Action Simulation Buttons */}
-          <div className="space-y-2 pt-2">
+          <div className="space-y-2.5 pt-2 pb-2">
             <Button
               type="button"
               disabled={isProcessing}
               onClick={handleSimulateSuccess}
-              className="w-full bg-[image:var(--gold-grad)] font-bold text-[var(--on-gold)] hover:brightness-105 cursor-pointer"
+              className="w-full bg-[image:var(--gold-grad)] font-bold text-[var(--on-gold)] hover:brightness-105 cursor-pointer h-11"
             >
               {isProcessing ? 'Verifying payment...' : `Simulate Successful Payment (${displayAmount})`}
             </Button>
@@ -187,7 +190,7 @@ export function MockRazorpayModal({
               variant="secondary"
               disabled={isProcessing}
               onClick={handleSimulateDecline}
-              className="w-full border-[var(--danger)] text-[var(--danger)] hover:bg-[var(--danger-bg)] cursor-pointer"
+              className="w-full border-[var(--danger)] text-[var(--danger)] hover:bg-[var(--danger-bg)] cursor-pointer h-11"
             >
               Simulate Bank Decline / Failure
             </Button>

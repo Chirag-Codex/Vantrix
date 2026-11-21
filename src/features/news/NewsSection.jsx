@@ -16,9 +16,11 @@ export function NewsSection() {
   return (
     <section id="news" className="py-20 md:py-28">
       <Container>
-        <h2 className="heading-h2 mb-12 text-center md:mb-16">
-          Catch up on the latest news
-        </h2>
+        <div className="mb-12 md:mb-16 flex flex-col items-center text-center">
+          <h2 className="heading-h2 heading-h2--center text-center w-full">
+            Catch up on the latest news
+          </h2>
+        </div>
 
         {/* 3 glass cards (padding 32px, radius 32px), 18px/700 headline, "Read more →" in 14px muted */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
